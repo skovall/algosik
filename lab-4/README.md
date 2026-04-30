@@ -77,6 +77,14 @@
 
 *3. Добавить удаление ссылки по короткому коду*
 
+```python
+    def delete_url(self, short_code):
+        if short_code in self.url_mapping:
+            del self.url_mapping[short_code]
+            return True
+        return False
+```
+
 ### Дополнительные методы
 ```python
     def get_all_urls(self):
