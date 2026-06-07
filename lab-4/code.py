@@ -12,20 +12,7 @@ class URLShortener:
         code = hash_hex[:self.code_length]
         return code
     
-    def _is_valid_url(self, url):
-        pattern = re.compile(
-            r'^https?://'
-            r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,6}\.?|'
-            r'localhost|'
-            r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'
-            r'(?::\d+)?'
-            r'(?:/?|[/?]\S+)$', re.IGNORECASE)
-        return pattern.match(url) is not None
-    
     def add_url(self, long_url):
-        if not self._is_valid_url(long_url):
-            raise ValueError("Некорректный URL")
-        
         short_code = self._generate_code(long_url)
         
         if short_code in self.url_mapping:
@@ -62,12 +49,8 @@ class URLShortener:
             print("Сохранённых ссылок нет")
             return
         
-        print("\n" + "="*80)
-        print("Сохранённые ссылки:")
-        print("="*80)
         for code, url in self.url_mapping.items():
             print(f"{code} -> {url}")
-        print("="*80 + "\n")
     
     def get_stats(self):
         return {
