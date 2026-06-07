@@ -8,11 +8,21 @@ class URLShortener:
     
     def _generate_code(self, long_url):
         hash_object = hashlib.md5(long_url.encode())
-        hash_hex = hash_object.hexdigest()
-        code = hash_hex[:self.code_length]
+        hash = hash_object.hexdigest()
+        code = hash[:self.code_length]
         return code
     
+    def _is_valid_url(self, url):
+        if not (url.startswith("http://") or url.startswith("https://")):
+            return False
+        if len(url.split("://")[1]) < 1:
+            return False
+        return True
+    
     def add_url(self, long_url):
+        if not self._is_valid_url(long_url):
+            raise ValueError("Некорректный URL")
+        
         short_code = self._generate_code(long_url)
         
         if short_code in self.url_mapping:
