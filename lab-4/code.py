@@ -49,11 +49,6 @@ class URLShortener:
             return True
         return False
     
-    def get_all_urls(self):
-        if not self.url_mapping:
-            return {}
-        return self.url_mapping.copy()
-    
     def display_all(self):
         if not self.url_mapping:
             print("Сохранённых ссылок нет")
@@ -61,9 +56,3 @@ class URLShortener:
         
         for code, url in self.url_mapping.items():
             print(f"{code} -> {url}")
-    
-    def get_stats(self):
-        return {
-            "total_links": len(self.url_mapping),
-            "code_length": self.code_length
-        }
